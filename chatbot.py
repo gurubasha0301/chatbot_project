@@ -1,9 +1,9 @@
 import datetime
 
-# Chatbot Commands
+
 VALID_COMMANDS = ["hello", "hi", "date", "time", "list operations", "generate prime", "search history", "bye"]
 
-# Store Chat History
+
 chat_history = []
 
 def log_chat(user_input, chatbot_response):
@@ -34,7 +34,7 @@ def handle_list_operations():
         numbers = list(map(int, user_input.split(",")))
     except ValueError:
         print("Chatbot: Error: The list must contain only integers separated by commas.")
-        return  # No need to ask "How else can I assist you?"
+        return
 
     sum_numbers = sum(numbers)
     max_number = max(numbers)
@@ -43,7 +43,6 @@ def handle_list_operations():
     response = f"  Sum: {sum_numbers}\n  Maximum: {max_number}\n  Reversed List: {reversed_list}"
     print(f"Chatbot:\n{response}")
     
-    # Ask if the user wants to remove duplicates
     print("Chatbot: Would you like to remove duplicates? (yes/no)")
     choice = input("User: ").strip().lower()
     
@@ -62,10 +61,10 @@ def handle_prime_numbers():
         start, end = map(int, user_input.split(","))
     except ValueError:
         print("Chatbot: Error: Please enter two integers separated by a comma.")
-        return  # No unnecessary "How else can I assist you?"
+        return
 
     primes = [n for n in range(start, end + 1) if is_prime(n)]
-    print(f"Chatbot:\n  Prime Numbers: {primes}")  # Just display the result
+    print(f"Chatbot:\n  Prime Numbers: {primes}")
     
     return f"  Prime Numbers: {primes}"
 
@@ -85,20 +84,20 @@ def handle_search_history():
 def handle_session_summary():
     """Generates and saves the session summary before asking to save."""
     
-    # Extract commands used
+    
     commands_used = [line.split(":")[1].strip() for line in chat_history if line.startswith("User:")]
     command_count = len(commands_used)
     
-    # Find the most frequently used command
+    
     most_frequent_command = max(set(commands_used), key=commands_used.count) if commands_used else "None"
     
-    # Generate session summary
+    
     summary = f"Your session:\n   - Commands Used: {command_count}\n   - Most Frequent Command: {most_frequent_command}"
     
-    # Display the session summary BEFORE asking to save
+    
     print(f"Chatbot: {summary}")
     
-    # Ask the user if they want to save the summary
+    
     print("Chatbot: Do you want to save this summary? (yes/no)")
     choice = input("User: ").strip().lower()
     
@@ -108,7 +107,7 @@ def handle_session_summary():
             file.write(summary)
         print(f"Chatbot: Summary saved to {filename} (saved on desktop)")
     
-    print("Chatbot: Goodbye! Have a great day!")  # Final message only
+    print("Chatbot: Goodbye! Have a great day!")
     return "Bye, have a good day!"
 
 
