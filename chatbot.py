@@ -1,4 +1,5 @@
 import datetime
+from collections import Counter
 
 
 VALID_COMMANDS = ["hello", "hi", "date", "time", "list operations", "generate prime", "search history", "bye"]
@@ -39,11 +40,39 @@ def handle_list_operations():
     sum_numbers = sum(numbers)
     max_number = max(numbers)
     reversed_list = list(reversed(numbers))
+    duplicates = count_duplicate(numbers)
     
-    response = f"  Sum: {sum_numbers}\n  Maximum: {max_number}\n  Reversed List: {reversed_list}"
+    response = f"  Sum: {sum_numbers}\n  Maximum: {max_number}\n  Reversed List: {reversed_list}\n Duplicates: {duplicates}"
     print(f"Chatbot:\n{response}")
+
+    if duplicates:
+        print("Chatbot: Would you like to remove duplicates? (yes/no)")
+        choice = input("User: ").strip().lower()
+
+        if choice == "yes":
+            numbers = sorted(set(numbers))
+            print(f"Chatbot:\n  Updated List: {numbers}\n  Removed duplicates successfully.")
+
+    return response
+
+
+def count_duplicate(lst):
+    freq={}
+    for item in lst:
+        if item in freq:
+            freq[item]+=1
+        else:
+            freq[item]=1
+    dup = {}
+    for key in freq:
+        if freq[key] >1:
+            dup [ key] = freq [key]
+    return dup
+
+
     
     print("Chatbot: Would you like to remove duplicates? (yes/no)")
+
     choice = input("User: ").strip().lower()
     
     if choice == "yes":
@@ -143,5 +172,9 @@ def chatbot():
         if user_input in ["date", "time", "list operations", "generate prime", "search history"]:
             print("Chatbot: How else can I assist you?")
 
+
+
 if __name__ == "__main__":
     chatbot()
+
+
